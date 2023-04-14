@@ -4,16 +4,15 @@ function Card(props) {
         props.onCardClick(props.card);
     }
 
-
     return (
-        <div class="photo-grid__element">
-            <button aria-label="Удалить" class="photo-grid__delete-button" type="button"></button>
-            <img class="photo-grid__photo" src={props.link} alt={props.name} onClick={handleClick} />
-            <div class="photo-grid__blok">
-                <h2 class="photo-grid__title">{props.name}</h2>
-                <div class="photo-grid__likes-blok">
-                    <button aria-label="Поставить лайк" class="photo-grid__like" type="button"></button>
-                    <p class="photo-grid__likes-counter">{props.likes.length}</p>
+        <div className="photo-grid__element">
+            <button aria-label="Удалить" className="photo-grid__delete-button" type="button"></button>
+            <img className="photo-grid__photo" src={props.card.link} alt={props.card.name} onClick={handleClick} />
+            <div className="photo-grid__blok">
+                <h2 className="photo-grid__title">{props.card.name}</h2>
+                <div className="photo-grid__likes-blok">
+                    <button aria-label="Поставить лайк" className="photo-grid__like" type="button"></button>
+                    <p className="photo-grid__likes-counter">{props.card.likes.length}</p>
                 </div>
             </div>
         </div>

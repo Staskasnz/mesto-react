@@ -1,44 +1,29 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { api } from '../utils/Api.js';
 import Card from './Card.js';
 
 function Main(props) {
 
-    const [userName, setUserName] = React.useState();
-    const [userDescription, setUserDescription] = React.useState();
-    const [userAvatar, setUserAvatar] = React.useState();
-    const [cards, setCards] = React.useState([]);
+    const [userName, setUserName] = useState("");
+    const [userDescription, setUserDescription] = useState("");
+    const [userAvatar, setUserAvatar] = useState("");
+    const [cards, setCards] = useState([]);
 
     useEffect(() => {
         Promise.all([
             api.getUserInfo(),
             api.getCardInfo()
         ])
-            .then((values) => {
-                setUserName(values[0].name)
-                setUserDescription(values[0].about)
-                setUserAvatar(values[0].avatar);
-                setCards(values[1]);
+            .then(([userData, cardsData]) => {
+                setUserName(userData.name)
+                setUserDescription(userData.about)
+                setUserAvatar(userData.avatar);
+                setCards(cardsData);
             })
             .catch((err) => {
                 console.log(err);
             })
     }, []);
-
-    const results = [];
-
-    cards.forEach(item => {
-        results.push(
-            <Card
-                link={item.link}
-                name={item.name}
-                likes={item.likes}
-                onCardClick={props.onCardClick}
-                card={item}
-            />
-        )
-    })
 
     return (
         <main className="content">
@@ -56,7 +41,15 @@ function Main(props) {
                 <button aria-label="Добавить" className="profile__add-button" type="button" onClick={props.onAddPlace}></button>
             </section>
             <section className="photo-grid">
-                {results}
+                {cards.map((item) => {
+                    return (
+                    <Card
+                        onCardClick={props.onCardClick}
+                        card={item}
+                        key={item._id}
+                    />
+                    )
+                })}
             </section>
         </main>
     )
