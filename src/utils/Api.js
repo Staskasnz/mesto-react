@@ -3,7 +3,7 @@ const apiInfoConfig = {
     headers: {
         authorization: 'dacb1343-5ee5-4c35-990d-5bf7b2f7cc79',
         'Content-Type': 'application/json'
-      }
+    }
 }
 
 class Api {
@@ -18,7 +18,7 @@ class Api {
         })
             .then(handleResponse)
     }
-    
+
 
     getCardInfo() {
         return fetch(`${this.url}/cards`, {
@@ -26,7 +26,7 @@ class Api {
         })
             .then(handleResponse)
     }
-    
+
 
     saveUserInfo(data) {
         return fetch(`${this.url}/users/me`, {
@@ -34,7 +34,7 @@ class Api {
             headers: this.headers,
             body: JSON.stringify({
                 name: data.name,
-                about: data.vocation
+                about: data.about
             })
         })
             .then(handleResponse)
@@ -71,20 +71,20 @@ class Api {
             .then(handleResponse)
     }
 
-    putLike(cardId) {
-        return fetch(`${this.url}/cards/${cardId}/likes`, {
-            method: 'PUT',
-            headers: this.headers
-        })
-            .then(handleResponse)
-    }
-
-    deleteLike(cardId) {
-        return fetch(`${this.url}/cards/${cardId}/likes`, {
-            method: 'DELETE',
-            headers: this.headers
-        })
-            .then(handleResponse)
+    changeLikeCardStatus(cardId, isLiked) {
+        if (isLiked) {
+            return fetch(`${this.url}/cards/${cardId}/likes`, {
+                method: 'PUT',
+                headers: this.headers
+            })
+                .then(handleResponse)
+        } else {
+            return fetch(`${this.url}/cards/${cardId}/likes`, {
+                method: 'DELETE',
+                headers: this.headers
+            })
+                .then(handleResponse)
+        }
     }
 }
 
@@ -97,4 +97,4 @@ function handleResponse(res) {
     return Promise.reject(new Error('Ошибка!!!'))
 }
 
-export {api};
+export { api };
