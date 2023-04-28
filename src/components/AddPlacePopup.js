@@ -3,8 +3,8 @@ import { useEffect, useRef } from 'react';
 
 function AddPlacePopup(props) {
 
-    const titleRef = useRef('');
-    const linkRef = useRef('');
+    const titleRef = useRef(null);
+    const linkRef = useRef(null);
 
     function handleSubmit(evt) {
         evt.preventDefault();
